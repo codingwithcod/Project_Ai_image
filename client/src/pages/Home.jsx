@@ -1,7 +1,8 @@
 import React , {useState, useEffect} from 'react';
 import {Card, FormField, Loader} from '../components'
 
-
+import  dotenv from 'dotenv'
+// dotenv.config()
 
 
 
@@ -9,7 +10,7 @@ import {Card, FormField, Loader} from '../components'
 
 
 const RenderCard = ({data, title}) => {
-  console.log(data, title)
+  
     if(data?.length > 0 ){
       return data.map((post) => <Card key={post._id} {...post} />)
     }
@@ -28,7 +29,13 @@ const RenderCard = ({data, title}) => {
 
 
 
+
 const Home = () => {
+  
+  const BASE_URL = 'https://ai-image-s0zk.onrender.com';
+  
+
+  // 
 
   const [loading, setLoading] = useState(false);
   const [allPosts, setAllPosts] = useState(null);
@@ -48,7 +55,7 @@ const fetchPosts = async () => {
   setLoading(true)
 
   try {
-    const response = await fetch("http://localhost:8080/api/v1/post", {
+    const response = await fetch(`${BASE_URL}/api/v1/post`, {
       method: 'GET',
       headers: {
         'Content-Type' : 'application/json'

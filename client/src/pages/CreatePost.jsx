@@ -1,12 +1,20 @@
 import React, {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import  dotenv from 'dotenv'
+// dotenv.config()
+
 import { preview } from '../assets'
 import {getRandomPrompts} from '../utils/'
 import { FormField, Loader } from '../components'
 
-const CreatePost = () => {
 
+
+
+const CreatePost = () => {
+  
+  const BASE_URL = 'https://ai-image-s0zk.onrender.com';
+  
   const navigate = useNavigate() ;
   const [form, setForm] = useState({
     name:'',
@@ -24,7 +32,7 @@ const CreatePost = () => {
     if(form.prompt){
     try {
       setGeneratingImg(true);
-      const response = await fetch("http://localhost:8080/api/v1/dalle",
+      const response = await fetch(`${BASE_URL}/api/v1/dalle`,
       {
         method:'post',
         headers:{
@@ -55,7 +63,7 @@ const CreatePost = () => {
 
       try {
         
-        const response = await fetch('http://localhost:8080/api/v1/post', {
+        const response = await fetch(`${BASE_URL}/api/v1/post`, {
           method : "post",
           headers: {
             'Content-Type' : 'application/json'
@@ -68,7 +76,7 @@ const CreatePost = () => {
         navigate('/')
 
       } catch (error) {
-          console.log("👉 ~ file: CreatePost.jsx:68 ~ handleSubmit ~ error", error)
+          
           alert(error)
       } finally {
         setLoading(false)
